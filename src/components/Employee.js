@@ -313,24 +313,28 @@ function Employee({
           <span className="tooltip">
             <Icon className="icon first">visibility</Icon>
             <span className="tooltip__content">
-              <Avatar>
-                <MediaBox
-                  src={
-                    'https://s3-us-west-2.amazonaws.com/feedback-adpi/employees/' +
-                    image_file_name
-                  }
-                  caption="A demo media box1"
-                  width="45%"
-                />
-              </Avatar>
-              <div className="tooltip__text">
-                Hello, my name is{' '}
-                <h5>
-                  {first_name} {last_name}
-                </h5>
-                I am <h5>{age}</h5>
-                And I am working in <h5>{company}</h5> company
-              </div>
+              <Col l={6} m={12} s={6}>
+                <Avatar>
+                  <MediaBox
+                    src={
+                      'https://s3-us-west-2.amazonaws.com/feedback-adpi/employees/' +
+                      image_file_name
+                    }
+                    caption="A demo media box1"
+                    width="45%"
+                  />
+                </Avatar>
+              </Col>
+              <Col l={6} m={12} s={6}>
+                <div className="tooltip__text">
+                  Hello, my name is{' '}
+                  <h5>
+                    {first_name} {last_name}
+                  </h5>
+                  I am <h5>{age}</h5>
+                  And I am working in <h5>{company}</h5> company
+                </div>
+              </Col>
             </span>
           </span>
           <Modal
