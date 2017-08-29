@@ -1,6 +1,7 @@
 import React from 'react'
 import logo from '../assets/logo.svg'
 import styled, { keyframes } from 'styled-components'
+import { Row, Navbar, NavItem, Icon } from 'react-materialize'
 
 const rotate360 = keyframes`
   from {
@@ -13,7 +14,6 @@ const rotate360 = keyframes`
 
 const TopBar = styled.div`
   background-color: #222;
-  height: 150px;
   padding: 20px;
   color: #fff;
 
@@ -25,10 +25,16 @@ const TopBar = styled.div`
 
 function Header() {
   return (
-    <TopBar>
-      <img src={logo} className="redux-logo" alt="logo" />
-      <h2>Welcome to Create Redux App</h2>
-    </TopBar>
+    <Row>
+      <Navbar right fixed={true}>
+        <NavItem href="get-started.html">
+          <Icon>search</Icon>
+        </NavItem>
+        <NavItem href="get-started.html">
+          <Icon>view_module</Icon>
+        </NavItem>
+      </Navbar>
+    </Row>
   )
 }
 

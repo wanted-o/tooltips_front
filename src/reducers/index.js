@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
-import counter from './counter'
+import employee from './employee'
 
 const rootReducer = combineReducers({
-  counter,
+  employee,
 })
 
 export default rootReducer
