@@ -74,7 +74,9 @@ export const update_employee = (id, data) => {
       headers: { Authorization: localStorage.getItem('auth_token') },
       data: props,
     })
-      .then(response => response.data)
+      .then(response => {
+        console.log(response.data)
+      })
       .then(json => dispatch(receiveEmployees(json, UPDATE_EMPLOYEE)))
 }
 export const delete_employee = id => {

@@ -4,6 +4,7 @@ import pure from 'recompose/pure'
 import PropTypes from 'prop-types'
 
 import { Row, Col, Input, Icon, Button } from 'react-materialize'
+import { Link } from 'react-router-dom'
 
 const RegisterWrapper = styled.div`
   max-width: 30%;
@@ -39,6 +40,12 @@ function Register({ handleChange, register_user }) {
           <Icon>vpn_key</Icon>
         </Input>
         <Button onClick={register_user}>Register</Button>
+        <div style={{ margin: '30px' }}>
+          Already have an account?<br />
+          <Link to="/sign_in">
+            <strong>Sign in</strong>
+          </Link>
+        </div>
       </RegisterWrapper>
     </Row>
   )

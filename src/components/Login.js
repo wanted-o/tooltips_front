@@ -4,6 +4,7 @@ import pure from 'recompose/pure'
 import PropTypes from 'prop-types'
 
 import { Row, Col, Input, Icon, Button } from 'react-materialize'
+import { Link } from 'react-router-dom'
 
 const LoginWrapper = styled.div`
   max-width: 30%;
@@ -31,6 +32,12 @@ function Login({ handleChange, login_user }) {
           <Icon>vpn_key</Icon>
         </Input>
         <Button onClick={login_user}>LOGIN</Button>
+        <div style={{ margin: '30px' }}>
+          Do not have an account?<br />
+          <Link to="/sign_up">
+            <strong>Sign up</strong>
+          </Link>
+        </div>
       </LoginWrapper>
     </Row>
   )

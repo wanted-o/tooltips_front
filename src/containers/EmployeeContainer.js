@@ -50,7 +50,7 @@ class EmployeeContainer extends React.Component {
       last_name: '',
       age: '',
       company: '',
-      image: '',
+      image: [],
     }
     this.props.get_employees()
   }
@@ -72,7 +72,7 @@ class EmployeeContainer extends React.Component {
       last_name: '',
       age: '',
       company: '',
-      image: '',
+      image: [],
     })
     document.getElementsByClassName('file_input')[index + 1].value = ''
   }
@@ -91,13 +91,13 @@ class EmployeeContainer extends React.Component {
       this.setState(state)
     }.bind(this)
   }
-  save = (id, first_name, last_name, age, company, image) => {
+  save = (id, first_name, last_name, age, company, image_file_name) => {
     let employee = {
       first_name: first_name,
       last_name: last_name,
       age: age,
       company: company,
-      image: image,
+      image: this.state.image,
     }
     if (this.state.first_name !== '' && this.state.first_name !== first_name) {
       employee.first_name = this.state.first_name
@@ -111,10 +111,6 @@ class EmployeeContainer extends React.Component {
     if (this.state.company !== '' && this.state.company !== company) {
       employee.company = this.state.company
     }
-    if (this.state.image !== '' && this.state.image !== image) {
-      employee.image = this.state.image
-    }
-    console.log(employee.image)
     const { update_employee } = this.props
     return update_employee(id, employee).then(() => {
       this.props.get_employees()
@@ -157,7 +153,6 @@ class EmployeeContainer extends React.Component {
   }
   render() {
     var employees
-    console.log(this.state)
     if (
       this.props.employee.all_employees &&
       this.props.employee.all_employees.length > 0
@@ -178,7 +173,6 @@ class EmployeeContainer extends React.Component {
             editing={this.state.editing}
             handleChange={this.handleChange}
             _delete={this._delete}
-            image={employee.image}
             reset={this.reset}
             index={index}
           />
