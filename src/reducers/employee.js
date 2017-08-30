@@ -16,6 +16,8 @@ export default function employee(state = initialState, action) {
       return { ...state, all_employees: action.payload }
     case DELETE_EMPLOYEE:
       return { ...state, all_employees: action.payload }
+    case ADD_EMPLOYEE:
+      return { ...state, all_employees: action.payload }
     default:
       return state
   }

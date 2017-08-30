@@ -25,7 +25,31 @@ export const get_employees = () => {
       .then(json => dispatch(receiveEmployees(json, GET_EMPLOYEES)))
 }
 
-export const add_employee = createAction(ADD_EMPLOYEE)
+export const add_employee = data => {
+  let props = null
+  if (typeof FormData === 'undefined') {
+    props = []
+  } else {
+    props = new FormData()
+    props.append('first_name', data.first_name)
+    props.append('last_name', data.last_name)
+    props.append('age', data.age)
+    props.append('company', data.company)
+    console.log('Props', props)
+    if (data.image) {
+      props.append('image', data.image)
+    }
+  }
+  return dispatch =>
+    axios({
+      method: 'POST',
+      url: `https://tooltips-back.herokuapp.com/employees`,
+      //headers: {Authorization: localStorage.getItem('access_token')},
+      data: props,
+    })
+      .then(response => response.data)
+      .then(json => dispatch(receiveEmployees(json, ADD_EMPLOYEE)))
+}
 
 export const update_employee = (id, data) => {
   let props = null
@@ -40,7 +64,7 @@ export const update_employee = (id, data) => {
     //props.append('last_name', data.last_name);
     console.log('Props', props)
     if (data.image) {
-      props.append('image', data.image[0])
+      props.append('image', data.image)
     }
   }
   return dispatch =>

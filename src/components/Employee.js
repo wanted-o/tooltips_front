@@ -16,9 +16,17 @@ import {
 const Avatar = styled.div`
   margin-top: 50px;
   margin-bottom: 30px;
-  .materialboxed {
+  .image-wrapper {
+    height: 350px;
+    width: 350px;
     border-radius: 50%;
+    overflow: hidden;
     margin: 0px auto;
+  }
+  .materialboxed {
+    margin: 0px auto;
+    width: 100%;
+    height: auto;
   }
 `
 const Title = styled.h3`
@@ -51,21 +59,23 @@ const More = styled.div`
     text-align: center;
     color: #fff;
   }
-  .more:hover .label {
+  .more:hover .label,
+  .active-hover .label {
     opacity: 0;
     -webkit-transition: opacity .5s .125s ease-out;
     transition: opacity .5s .125s ease-out;
   }
-  .more:hover .icon {
+  .more:hover .icon,
+  .active-icon .icon {
     border-radius: 1em;
-    margin: 0 10px;
+    margin: 0;
   }
 
   .icon,
   .label {
     background-color: #1f7a7a;
     line-height: 3.2rem;
-    height: 3rem;
+    height: 3.2rem;
   }
 
   .label {
@@ -271,18 +281,27 @@ function Employee({
   age,
   last_name,
   _delete,
+  image,
+  reset,
+  index,
 }) {
+  localStorage.getItem('role') !== 'admin'
+    ? (document.getElementsByClassName('more').className +=
+        'active-hover active-icon')
+    : (document.getElementsByClassName('more').className = 'more')
   return (
     <Col l={3} m={6} s={12} className="grid-example" style={{ height: '65vh' }}>
       <Avatar>
-        <MediaBox
-          src={
-            'https://s3-us-west-2.amazonaws.com/feedback-adpi/employees/' +
-            image_file_name
-          }
-          caption={first_name}
-          width="75%"
-        />
+        <div className="image-wrapper">
+          <MediaBox
+            src={
+              'https://s3-us-west-2.amazonaws.com/feedback-adpi/employees/' +
+              image_file_name
+            }
+            caption={first_name}
+            width="75%"
+          />
+        </div>
       </Avatar>
       {editing === id
         ? <Row>
@@ -309,7 +328,7 @@ function Employee({
         {company}
       </Subtitle>
       <More>
-        <div className="more">
+        <div className="more active-hover active-icon">
           <span className="tooltip">
             <Icon className="icon first">visibility</Icon>
             <span className="tooltip__content">
@@ -337,106 +356,116 @@ function Employee({
               </Col>
             </span>
           </span>
-          <Modal
-            header="Edit Employee:"
-            trigger={
-              <span>
-                <Icon className="icon">edit</Icon>
-              </span>
-            }
-            actions={
-              <span>
-                <Button
-                  waves="light"
-                  flat
-                  className="modal-action modal-close"
-                  style={{ margin: '0px 20px', float: 'none' }}
+          {localStorage.getItem('role') !== 'admin'
+            ? null
+            : <span>
+                <Modal
+                  header="Edit Employee:"
+                  trigger={
+                    <span>
+                      <Icon className="icon">edit</Icon>
+                    </span>
+                  }
+                  actions={
+                    <span>
+                      <Button
+                        waves="light"
+                        flat
+                        className="modal-action modal-close"
+                        style={{ margin: '0px 20px', float: 'none' }}
+                        onClick={reset.bind(this, index)}
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        className="modal-action modal-close"
+                        onClick={save.bind(
+                          this,
+                          id,
+                          first_name,
+                          last_name,
+                          age,
+                          company
+                        )}
+                        style={{ margin: '0px 20px', float: 'none' }}
+                      >
+                        Update
+                      </Button>
+                    </span>
+                  }
+                  style={{
+                    backgroundColor: 'rgba(255,255,255)',
+                    width: '40vw',
+                    textAlign: 'center',
+                  }}
                 >
-                  Cancel
-                </Button>
-                <Button
-                  className="modal-action modal-close"
-                  onClick={save.bind(
-                    this,
-                    id,
-                    first_name,
-                    last_name,
-                    age,
-                    company
-                  )}
-                  style={{ margin: '0px 20px', float: 'none' }}
+                  <Row>
+                    <Input
+                      s={6}
+                      label="First Name"
+                      defaultValue={first_name}
+                      onChange={handleChange('first_name')}
+                    />
+                    <Input
+                      s={6}
+                      label="Last Name"
+                      defaultValue={last_name}
+                      onChange={handleChange('last_name')}
+                    />
+                    <Input
+                      s={6}
+                      label="Age"
+                      defaultValue={age}
+                      onChange={handleChange('age')}
+                    />
+                    <Input
+                      s={6}
+                      label="Company"
+                      defaultValue={company}
+                      onChange={handleChange('company')}
+                    />
+                    <input
+                      type="file"
+                      onChange={handleChange('image', index)}
+                      className="file_input"
+                    />
+                  </Row>
+                </Modal>
+                <Modal
+                  header="Delete Employee:"
+                  trigger={
+                    <span>
+                      <Icon className="icon last">delete</Icon>
+                    </span>
+                  }
+                  actions={
+                    <span>
+                      <Button
+                        waves="light"
+                        flat
+                        className="modal-action modal-close"
+                        style={{ margin: '0px 20px', float: 'none' }}
+                      >
+                        No
+                      </Button>
+                      <Button
+                        className="modal-action modal-close"
+                        onClick={_delete.bind(this, id)}
+                        style={{ margin: '0px 20px', float: 'none' }}
+                      >
+                        Yes
+                      </Button>
+                    </span>
+                  }
+                  style={{
+                    backgroundColor: 'rgba(255,255,255)',
+                    width: '20vw',
+                    textAlign: 'center',
+                  }}
                 >
-                  Update
-                </Button>
-              </span>
-            }
-            style={{
-              backgroundColor: 'rgba(255,255,255)',
-              width: '40vw',
-              textAlign: 'center',
-            }}
-          >
-            <Row>
-              <Input
-                s={6}
-                label="First Name"
-                defaultValue={first_name}
-                onChange={handleChange('first_name')}
-              />
-              <Input
-                s={6}
-                label="Last Name"
-                defaultValue={last_name}
-                onChange={handleChange('last_name')}
-              />
-              <Input
-                s={6}
-                label="Age"
-                defaultValue={age}
-                onChange={handleChange('age')}
-              />
-              <Input
-                s={6}
-                label="Company"
-                defaultValue={company}
-                onChange={handleChange('company')}
-              />
-            </Row>
-          </Modal>
-          <Modal
-            header="Delete Employee:"
-            trigger={
-              <span>
-                <Icon className="icon last">delete</Icon>
-              </span>
-            }
-            actions={
-              <span>
-                <Button
-                  waves="light"
-                  flat
-                  className="modal-action modal-close"
-                  style={{ margin: '0px 20px', float: 'none' }}
-                >
-                  No
-                </Button>
-                <Button
-                  className="modal-action modal-close"
-                  onClick={_delete.bind(this, id)}
-                  style={{ margin: '0px 20px', float: 'none' }}
-                >
-                  Yes
-                </Button>
-              </span>
-            }
-            style={{
-              backgroundColor: 'rgba(255,255,255)',
-              width: '20vw',
-              textAlign: 'center',
-            }}
-          >
-            <h3 style={{ fontWeight: '900' }}> Are you sure? </h3>
-          </Modal>
+                  <h3 style={{ fontWeight: '900' }}> Are you sure? </h3>
+                </Modal>
+              </span>}
 
           <div className="label">More</div>
         </div>

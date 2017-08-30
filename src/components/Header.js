@@ -1,7 +1,15 @@
 import React from 'react'
 import logo from '../assets/logo.svg'
 import styled, { keyframes } from 'styled-components'
-import { Row, Navbar, NavItem, Icon } from 'react-materialize'
+import {
+  Row,
+  Col,
+  Navbar,
+  NavItem,
+  Modal,
+  Input,
+  Button,
+} from 'react-materialize'
 
 const rotate360 = keyframes`
   from {
@@ -26,12 +34,23 @@ const TopBar = styled.div`
 function Header() {
   return (
     <Row>
-      <Navbar right fixed={true}>
-        <NavItem href="get-started.html">
-          <Icon>search</Icon>
-        </NavItem>
-        <NavItem href="get-started.html">
-          <Icon>view_module</Icon>
+      <Navbar
+        style={{ backgroundColor: '#1f7a7a' }}
+        brand={
+          <h4 style={{ margin: '0px 20px', lineHeight: '64px' }}>
+            Tooltips app
+          </h4>
+        }
+        left
+      >
+        <NavItem
+          style={{ margin: '0px 20px' }}
+          onClick={() => {
+            localStorage.removeItem('auth_token')
+          }}
+          href="/sign_in"
+        >
+          Logout
         </NavItem>
       </Navbar>
     </Row>
