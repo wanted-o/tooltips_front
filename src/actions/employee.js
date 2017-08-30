@@ -19,7 +19,7 @@ export const get_employees = () => {
     axios({
       method: 'GET',
       url: `https://tooltips-back.herokuapp.com/employees`,
-      //headers: {Authorization: localStorage.getItem('access_token')},
+      headers: { Authorization: localStorage.getItem('auth_token') },
     })
       .then(response => response.data)
       .then(json => dispatch(receiveEmployees(json, GET_EMPLOYEES)))
@@ -44,7 +44,7 @@ export const add_employee = data => {
     axios({
       method: 'POST',
       url: `https://tooltips-back.herokuapp.com/employees`,
-      //headers: {Authorization: localStorage.getItem('access_token')},
+      headers: { Authorization: localStorage.getItem('auth_token') },
       data: props,
     })
       .then(response => response.data)
@@ -71,7 +71,7 @@ export const update_employee = (id, data) => {
     axios({
       method: 'PATCH',
       url: `https://tooltips-back.herokuapp.com/employees/${id}`,
-      //headers: {Authorization: localStorage.getItem('access_token')},
+      headers: { Authorization: localStorage.getItem('auth_token') },
       data: props,
     })
       .then(response => response.data)
@@ -83,7 +83,7 @@ export const delete_employee = id => {
     axios({
       method: 'DELETE',
       url: `https://tooltips-back.herokuapp.com/employees/${id}`,
-      //headers: {Authorization: localStorage.getItem('access_token')},
+      headers: { Authorization: localStorage.getItem('auth_token') },
       data: id,
     })
       .then(response => response.data)

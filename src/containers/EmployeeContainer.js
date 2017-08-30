@@ -114,7 +114,7 @@ class EmployeeContainer extends React.Component {
     if (this.state.image !== '' && this.state.image !== image) {
       employee.image = this.state.image
     }
-    console.log(employee)
+    console.log(employee.image)
     const { update_employee } = this.props
     return update_employee(id, employee).then(() => {
       this.props.get_employees()
@@ -145,7 +145,6 @@ class EmployeeContainer extends React.Component {
     }
     const { add_employee } = this.props
     return add_employee(employee).then(() => {
-      this.props.get_employees()
       this.setState({
         first_name: '',
         last_name: '',
@@ -153,6 +152,7 @@ class EmployeeContainer extends React.Component {
         company: '',
         image: '',
       })
+      this.props.get_employees()
     })
   }
   render() {

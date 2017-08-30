@@ -17,8 +17,8 @@ const Avatar = styled.div`
   margin-top: 50px;
   margin-bottom: 30px;
   .image-wrapper {
-    height: 350px;
-    width: 350px;
+    height: 20vw;
+    width: 20vw;
     border-radius: 50%;
     overflow: hidden;
     margin: 0px auto;
@@ -27,6 +27,18 @@ const Avatar = styled.div`
     margin: 0px auto;
     width: 100%;
     height: auto;
+  }
+  @media screen and (max-width: 992px) and (min-width: 768px) {
+    .image-wrapper {
+      height: 35vw;
+      width: 35vw;
+    }
+  }
+  @media only screen and (max-width: 768px) {
+    .image-wrapper {
+      height: 45vw;
+      width: 45vw;
+    }
   }
 `
 const Title = styled.h3`
@@ -253,14 +265,13 @@ const More = styled.div`
     /* For tablets: */
     .tooltip:hover .tooltip__content,
     .first:hover .tooltip__content {
-      width: 30vw;
+      width: 50vw;
     }
   }
   @media only screen and (min-width: 768px) {
     /* For desktop: */
   }
   @media only screen and (max-width: 768px) {
-    /* For mobile phones: */
     .tooltip:hover .tooltip__content,
     .first:hover .tooltip__content {
       width: 80vw;
@@ -285,10 +296,6 @@ function Employee({
   reset,
   index,
 }) {
-  localStorage.getItem('role') !== 'admin'
-    ? (document.getElementsByClassName('more').className +=
-        'active-hover active-icon')
-    : (document.getElementsByClassName('more').className = 'more')
   return (
     <Col l={3} m={6} s={12} className="grid-example" style={{ height: '65vh' }}>
       <Avatar>
@@ -328,11 +335,17 @@ function Employee({
         {company}
       </Subtitle>
       <More>
-        <div className="more active-hover active-icon">
+        <div
+          className={
+            localStorage.getItem('role') !== 'admin'
+              ? 'more active-hover active-icon'
+              : 'more'
+          }
+        >
           <span className="tooltip">
             <Icon className="icon first">visibility</Icon>
             <span className="tooltip__content">
-              <Col l={6} m={12} s={6}>
+              <Col l={6} m={6} s={6}>
                 <Avatar>
                   <MediaBox
                     src={
@@ -344,7 +357,7 @@ function Employee({
                   />
                 </Avatar>
               </Col>
-              <Col l={6} m={12} s={6}>
+              <Col l={6} m={6} s={6}>
                 <div className="tooltip__text">
                   Hello, my name is{' '}
                   <h5>
